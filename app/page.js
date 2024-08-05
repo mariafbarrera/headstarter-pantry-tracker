@@ -84,15 +84,13 @@ const addItem = async (item) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          backgroundColor: '#454B1B', // Header background color
+          backgroundColor: '#333', // Header background color
           padding: '10px 20px',
         }}
       >
         {/* Logo/Title */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <IconButton>
-            <LocalDining sx={{ color: '#8A9A5B' }}/> 
-          </IconButton>
+            <LocalDining sx={{ color: '#8A9A5B' }}/>
           <Typography variant="h6" sx={{ ml: 1, color: '#8A9A5B' }}>
             Pantry Tracker
           </Typography>
@@ -115,7 +113,19 @@ const addItem = async (item) => {
               sx: {
                 borderRadius: '20px',
                 backgroundColor: 'rgba(0, 0, 0, 0.1)', // Slightly transparent background
+                '&.Mui-focused': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.2)', // Change background on focus
+                  // boxShadow: '0 0 5px #8A9A5B', // Optional: add a shadow to indicate focus
+                  borderColor: '#8A9A5B', // Optional: change border color on focus
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: 'rgba(0, 0, 0, 0.3)', // Border color when not focused
+                },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#8A9A5B', // Border color when focused
+                },
               },
+              
             }}
           />
         </Box>
@@ -135,7 +145,7 @@ const addItem = async (item) => {
           top="50%"
           left="50%"
           width={400}
-          bgcolor="white"
+          bgcolor="#333"
           border="2px solid #000"
           boxShadow={24}
           p={4} //padding
@@ -146,7 +156,12 @@ const addItem = async (item) => {
             transform: "translate(-50%, -50%)"
           }}
         >
-          <Typography variant="h6"> Add Item</Typography>
+          <Typography 
+          variant="h6" 
+          sx={{
+            color: '#ffff', // Replace with your desired text color
+          }}
+          > Add Item</Typography>
           <Stack width="100%" direction="row" spacing={2}> 
 
             <TextField
@@ -156,6 +171,22 @@ const addItem = async (item) => {
               onChange={(e) => {
                 setItemName(e.target.value) 
               }}
+              sx={{
+                '& .MuiInputBase-input': {
+                  color: '#ffff', // Text color
+                },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: '#070205', // Border color
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#8A9A5B', // Border color on hover
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#8A9A5B', // Border color when focused
+                  },
+                },
+              }}
             />
 
             <Button
@@ -164,42 +195,50 @@ const addItem = async (item) => {
                 addItem(itemName)
                 setItemName('')
                 handleClose()
+              }}
+              sx={{
+                borderColor: '#8A9A5B', // Color for the button border
+                color: '#8A9A5B', // Color for the button text
+                '&:hover': {
+                  borderColor: '#8A9A5B', // Background color on hover
+                  color: '#8A9A5B', // Text color on hover
+                  },
               }}    
             > Add</Button>
           </Stack>
         </Box>
       </Modal>
-      {/* <Typography variant="h1"> Pantry Tracker </Typography> */}
-      <Button variant="contained" onClick={() => {
+      <Button 
+        variant="contained"
+        sx={{
+          backgroundColor: '#333', // Color for the button border
+          color: '#8A9A5B', // Color for the button text
+          '&:hover': {
+          backgroundColor: '#8A9A5B', // Background color on hover
+          color: '#333', // Text color on hover
+          },
+        }}  
+        onClick={() => {
         handleOpen()
       }}> 
       Add New Item
       </Button>
 
-      {/* <TextField
-        variant="outlined"
-        label="Search Items"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        sx={{ width: 400, mb: 2 }}
-      /> */}
 
-
-
-      <Box border="1px solid #333">
+      <Box border="1px solid #8A9A5B">
         <Box
           width="800px"
           height="100px"
-          bgcolor="#ADD8E6"
+          bgcolor="#333"
           display="flex"
           alignItems="center"
           justifyContent="center"
         >
-          <Typography variant="h2" color="#333">
+          <Typography variant="h4" color="#8A9A5B">
             Inventory Items 
           </Typography>
         </Box>
-      <Stack width="800px" height="300px" spacing={2} overflow="auto"> 
+      <Stack width="800px" height="300px"  overflow="auto"> 
         { inventory
           .filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()))
           .map(({name, quantity}) => (
@@ -210,26 +249,42 @@ const addItem = async (item) => {
               display="flex" 
               alignItems="center" 
               justifyContent="space-between"
-              bgcolor="f0f0f0"
+              bgcolor="#333"
               padding={5}
             > 
-              <Typography variant="h3" color="#333" textAlign="center"> 
+              <Typography variant="h3" color="#8A9A5B" textAlign="center"> 
                 {name.charAt(0).toUpperCase() + name.slice(1)}
               </Typography>
-              <Typography variant="h3" color="#333" textAlign="center"> 
+              <Typography variant="h3" color="#8A9A5B" textAlign="center"> 
                 {quantity}
               </Typography>
 
               <Stack direction="row" spacing={2}> 
               <Button 
-                variant="contained" 
+                variant="outlined" 
+                sx={{
+                  borderColor: '#8A9A5B', // Color for the button border
+                  color: '#8A9A5B', // Color for the button text
+                  '&:hover': {
+                  borderColor: '#ffff', // Background color on hover
+                  color: '#8A9A5B', // Text color on hover
+                  },
+                }} 
                 onClick={() => {
                   addItem(name)
               }}> 
                 Add
               </Button>   
               <Button 
-                variant="contained" 
+                variant="outlined"
+                sx={{
+                  borderColor: '#8A9A5B', // Color for the button border
+                  color: '#8A9A5B', // Color for the button text
+                  '&:hover': {
+                    borderColor: '#ffff', // Background color on hover
+                    color: '#8A9A5B', // Text color on hover
+                    },
+                }} 
                 onClick={() => {
                   removeItem(name)
               }}> 
